@@ -1,0 +1,33 @@
+<div class="atms-table-container">
+  <h2>Popis bankomata</h2>
+
+  <table class="atm-table" *ngIf="atms.length > 0">
+    <thead>
+      <tr>
+        <th>R.B.</th>
+        <th>Vrsta bankomata</th>
+        <th>Adresa</th>
+        <th>Koordinate (E, N)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let atm of atms" (click)="onRowClick(atm)">
+        <td>{{ atm.id }}</td>
+        <td>{{ atm.type }}</td>
+        <td>{{ atm.address }}</td>
+        <td>
+          <ng-container *ngIf="atm.coordinates; else noCoords">
+            E: {{ atm.coordinates.E }}, N: {{ atm.coordinates.N }}
+          </ng-container>
+          <ng-template #noCoords>
+            N/A
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="atms.length === 0" class="no-atms">
+    Nema dostupnih bankomata.
+  </p>
+</div>
