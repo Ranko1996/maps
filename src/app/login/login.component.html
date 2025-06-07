@@ -1,0 +1,43 @@
+<div class="login-container">
+  <h2>Prijava</h2>
+  
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="username">Korisničko ime:</label>
+      <input 
+        type="text" 
+        id="username" 
+        name="username" 
+        [(ngModel)]="username" 
+        required 
+        #usernameInput="ngModel"
+        [ngClass]="{'is-invalid': usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)}"
+      >
+      <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="validation-error">
+        <div *ngIf="usernameInput.errors?.['required']">Korisničko ime je obavezno.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Lozinka:</label>
+      <input 
+        type="password" 
+        id="password" 
+        name="password" 
+        [(ngModel)]="password" 
+        required 
+        #passwordInput="ngModel"
+        [ngClass]="{'is-invalid': passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)}"
+      >
+      <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="validation-error">
+        <div *ngIf="passwordInput.errors?.['required']">Lozinka je obavezna.</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Prijavi se</button>
+  </form>
+  
+  <p *ngIf="loginMessage" [ngClass]="{'success-message': loginMessage.includes('uspješna'), 'error-message': !loginMessage.includes('uspješna')}">
+    {{ loginMessage }}
+  </p>
+</div>
