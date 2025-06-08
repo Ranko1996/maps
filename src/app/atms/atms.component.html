@@ -1,33 +1,136 @@
 <div class="atms-table-container">
-  <h2>Popis bankomata</h2>
+  <div *ngIf="loading">Učitavanje bankomata...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
 
-  <table class="atm-table" *ngIf="atms.length > 0">
+  <table class="atm-table" *ngIf="!loading && !error">
     <thead>
       <tr>
         <th>R.B.</th>
         <th>Vrsta bankomata</th>
         <th>Adresa</th>
-        <th>Koordinate (E, N)</th>
+        <th>Koordinate</th>
+        <th colspan="2">Akcije</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let atm of atms" (click)="onRowClick(atm)">
-        <td>{{ atm.id }}</td>
-        <td>{{ atm.type }}</td>
-        <td>{{ atm.address }}</td>
+      <tr class="filter-row">
+        <td></td>
         <td>
-          <ng-container *ngIf="atm.coordinates; else noCoords">
-            E: {{ atm.coordinates.E }}, N: {{ atm.coordinates.N }}
-          </ng-container>
-          <ng-template #noCoords>
-            N/A
-          </ng-template>
+          <input
+            type="text"
+            [(ngModel)]="filterType"
+            placeholder="Pretraži po vrsti"
+            class="filter-input"
+          />
         </td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="filterAddress"
+            placeholder="Pretraži po adresi"
+            class="filter-input"
+          />
+        </td>
+        <td></td>
+        <td class="filter-action-cell">
+          <button (click)="searchAtms()" class="search-button">Pretraži</button>
+          </td>
+      </tr>
+      <tr *ngIf="isAdmin" class="admin-add-row">
+        <td></td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="newAtmType"
+            placeholder="Vrsta"
+            class="add-input"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="newAtmAddress"
+            placeholder="Adresa"
+            class="add-input"
+          />
+        </td>
+        <td class="coordinates-input-cell">
+          <input
+            type="number"
+            [(ngModel)]="newAtmCoordE"
+            placeholder="E"
+            class="add-input coord-input"
+          />
+          <input
+            type="number"
+            [(ngModel)]="newAtmCoordN"
+            placeholder="N"
+            class="add-input coord-input"
+          />
+        </td>
+        <td class="action-buttons-cell add-action-cell">
+          <button (click)="addAtm()" class="add-button">Dodaj</button>
+        </td>
+      </tr>
+      <tr
+        *ngFor="let atm of atms; let i = index"
+        (click)="onRowClick(atm)"
+        tabindex="0"
+        role="button"
+      >
+        <td>{{ i + 1 }}</td>
+        <ng-container *ngIf="editingAtmId === atm.id; else viewMode">
+          <td>
+            <input type="text" [(ngModel)]="editAtmType" class="edit-input" />
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="editAtmAddress" class="edit-input" />
+          </td>
+          <td class="coordinates-input-cell">
+            <input type="number" [(ngModel)]="editAtmCoordE" placeholder="E" class="edit-input coord-input" />
+            <input type="number" [(ngModel)]="editAtmCoordN" placeholder="N" class="edit-input coord-input" />
+          </td>
+          <td *ngIf="isAdmin" class="action-buttons-cell">
+            <button
+              (click)="saveEdit(atm); $event.stopPropagation()"
+              class="action-button save-button"
+            >
+              Spremi
+            </button>
+            <button
+              (click)="cancelEdit(); $event.stopPropagation()"
+              class="action-button cancel-button"
+            >
+              Odustani
+            </button>
+          </td>
+        </ng-container>
+        <ng-template #viewMode>
+          <td>{{ atm.type }}</td>
+          <td>{{ atm.address }}</td>
+          <td>
+            {{ atm.coordinates ? ('E: ' + atm.coordinates.E + ', N: ' + atm.coordinates.N) : 'N/A' }}
+          </td>
+          <td *ngIf="isAdmin" class="action-buttons-cell">
+            <button
+              (click)="editAtm(atm); $event.stopPropagation()"
+              class="action-button edit-button"
+            >
+              Uredi
+            </button>
+            <button
+              (click)="deleteAtm(atm.id); $event.stopPropagation()"
+              class="action-button delete-button"
+            >
+              Obriši
+            </button>
+          </td>
+        </ng-template>
       </tr>
     </tbody>
   </table>
 
-  <p *ngIf="atms.length === 0" class="no-atms">
+  <div *ngIf="!loading && !error && atms.length === 0" class="no-atms">
     Nema dostupnih bankomata.
-  </p>
+  </div>
 </div>

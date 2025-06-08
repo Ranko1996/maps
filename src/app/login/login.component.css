@@ -28,16 +28,16 @@ label {
 
 input[type="text"],
 input[type="password"] {
-  width: calc(100% - 22px); /* Uzima u obzir padding i border */
+  width: calc(100% - 22px); 
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 1em;
-  box-sizing: border-box; /* Važno za ispravnu širinu */
+  box-sizing: border-box; 
 }
 
 input.is-invalid {
-  border-color: #dc3545; /* Crveni obrub za nevalidna polja */
+  border-color: #dc3545;
   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
 

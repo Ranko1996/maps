@@ -1,11 +1,10 @@
-// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root' // Označava servis kao singleton, dostupan u cijeloj aplikaciji
+  providedIn: 'root' 
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000'; 

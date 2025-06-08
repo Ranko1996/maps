@@ -1,3 +1,18 @@
- <app-atms (atmSelected)="onAtmSelected($event)"></app-atms>
+<div class="home-container">
+  <header class="page-header">
+    <div class="user-info">
+      <span *ngIf="username">Dobrodošli, <strong>{{ username }}</strong>!</span>
+    </div>
+    <button (click)="onLogout()" class="logout-button">Odjavi se</button>
+  </header>
 
-<app-map [centerCoordinates]="selectedAtmCoordinates"></app-map>
+  <div class="content-wrapper">
+    <div class="atm-list-panel">
+      <app-atms (atmSelected)="onAtmSelected($event)"></app-atms>
+    </div>
+
+    <div class="map-panel">
+      <app-map [centerCoordinates]="selectedAtmCoordinates"></app-map>
+    </div>
+  </div>
+</div>
