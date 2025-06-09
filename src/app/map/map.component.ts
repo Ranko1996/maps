@@ -68,7 +68,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       }).extend([])
     });
 
-    // --- CHANGE START ---
     this.vectorLayer = new VectorLayer({
       source: new VectorSource(),
       style: new Style({
@@ -84,7 +83,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         })
       })
     });
-    // --- CHANGE END ---
 
     this.map.addLayer(this.vectorLayer);
   }
