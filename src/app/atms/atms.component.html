@@ -34,7 +34,7 @@
         <td></td>
         <td class="filter-action-cell">
           <button (click)="searchAtms()" class="search-button">Pretraži</button>
-          </td>
+        </td>
       </tr>
       <tr *ngIf="isAdmin" class="admin-add-row">
         <td></td>
@@ -111,19 +111,29 @@
           <td>
             {{ atm.coordinates ? ('E: ' + atm.coordinates.E + ', N: ' + atm.coordinates.N) : 'N/A' }}
           </td>
-          <td *ngIf="isAdmin" class="action-buttons-cell">
-            <button
-              (click)="editAtm(atm); $event.stopPropagation()"
-              class="action-button edit-button"
-            >
-              Uredi
-            </button>
-            <button
-              (click)="deleteAtm(atm.id); $event.stopPropagation()"
-              class="action-button delete-button"
-            >
-              Obriši
-            </button>
+          <td class="action-buttons-cell" [attr.colspan]="isAdmin ? 1 : 2">
+            <ng-container *ngIf="isAdmin; else userActions">
+              <button
+                (click)="editAtm(atm); $event.stopPropagation()"
+                class="action-button edit-button"
+              >
+                Uredi
+              </button>
+              <button
+                (click)="deleteAtm(atm.id); $event.stopPropagation()"
+                class="action-button delete-button"
+              >
+                Obriši
+              </button>
+            </ng-container>
+            <ng-template #userActions>
+              <button
+                (click)="showDetails(atm); $event.stopPropagation()"
+                class="action-button details-button"
+              >
+                Detalji
+              </button>
+            </ng-template>
           </td>
         </ng-template>
       </tr>

@@ -9,13 +9,15 @@ import Point from 'ol/geom/Point';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import Style from 'ol/style/Style';
-import Icon from 'ol/style/Icon';
+import Circle from 'ol/style/Circle'; // Import Circle for a built-in marker
+import Fill from 'ol/style/Fill';     // Import Fill for the circle's color
+import Stroke from 'ol/style/Stroke'; // Import Stroke for the circle's border
 import { defaults as defaultControls, ScaleLine } from 'ol/control';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [], 
+  imports: [],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
@@ -60,25 +62,31 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         zoom: 12
       }),
       controls: defaultControls({
-        zoom: false,         // Uklanja +/- kontrole za zoom
-        rotate: false,       // Uklanja kontrolu za rotaciju
-        attribution: false   // Uklanja "OpenLayers" link i atributivne informacije
+        zoom: false,
+        rotate: false,
+        attribution: false
       }).extend([])
     });
 
+    // --- CHANGE START ---
     this.vectorLayer = new VectorLayer({
       source: new VectorSource(),
       style: new Style({
-        image: new Icon({
-          anchor: [0.5, 1],
-          src: 'assets/marker.png', // Provjerite da ova slika postoji
-          scale: 0.07
+        image: new Circle({
+          radius: 8, 
+          fill: new Fill({
+            color: 'rgba(255, 0, 0, 0.6)' 
+          }),
+          stroke: new Stroke({
+            color: 'red', 
+            width: 2
+          })
         })
       })
     });
-    this.map.addLayer(this.vectorLayer);
+    // --- CHANGE END ---
 
-   
+    this.map.addLayer(this.vectorLayer);
   }
 
   private centerMapOnCoordinates(E: number, N: number): void {

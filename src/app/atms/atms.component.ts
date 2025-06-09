@@ -147,7 +147,6 @@ export class AtmsComponent implements OnInit {
     this.editAtmCoordN = atm.coordinates ? atm.coordinates.N : null;
   }
 
-  // New method to save changes
   saveEdit(atm: Atm): void {
     if (!this.editAtmType || !this.editAtmAddress || this.editAtmCoordE === null || this.editAtmCoordN === null) {
       alert('Molimo popunite sva polja za uređivanje bankomata.');
@@ -190,5 +189,18 @@ export class AtmsComponent implements OnInit {
     } else {
       console.warn('ATM nema definirane koordinate.');
     }
+  }
+
+  // New method for showing ATM details
+  showDetails(atm: Atm): void {
+    let details = `Detalji bankomata:\n`;
+    details += `Vrsta: ${atm.type}\n`;
+    details += `Adresa: ${atm.address}\n`;
+    if (atm.coordinates) {
+      details += `Koordinate: E: ${atm.coordinates.E}, N: ${atm.coordinates.N}\n`;
+    } else {
+      details += `Koordinate: N/A\n`;
+    }
+    alert(details);
   }
 }
