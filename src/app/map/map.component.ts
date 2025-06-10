@@ -9,9 +9,9 @@ import Point from 'ol/geom/Point';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import Style from 'ol/style/Style';
-import Circle from 'ol/style/Circle'; // Import Circle for a built-in marker
-import Fill from 'ol/style/Fill';     // Import Fill for the circle's color
-import Stroke from 'ol/style/Stroke'; // Import Stroke for the circle's border
+import Circle from 'ol/style/Circle'; 
+import Fill from 'ol/style/Fill';     
+import Stroke from 'ol/style/Stroke'; 
 import { defaults as defaultControls, ScaleLine } from 'ol/control';
 
 @Component({
@@ -95,8 +95,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       zoom: 16
     });
 
-    this.vectorLayer.getSource()?.clear(); // Briše postojeće markere
-    this.addMarker(E, N); // Dodaje novi marker na nove koordinate
+    this.vectorLayer.getSource()?.clear();
+    this.addMarker(E, N); 
   }
 
   private addMarker(E: number, N: number): void {
